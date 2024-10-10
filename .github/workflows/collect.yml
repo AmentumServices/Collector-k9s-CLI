@@ -1,4 +1,4 @@
-name: k9s CLI IB Collector
+name: k9s CLI Collector
 run-name: ${{ github.actor }} is Collecting 🚀
 on:
   push:
