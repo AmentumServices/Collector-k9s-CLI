@@ -33,7 +33,7 @@ jobs:
 
       - name: Run Skopeo Sync
         run: |
-          skopeo sync --scoped \
+          skopeo sync \
               --src yaml --dest dir ${{ vars.COLLECTOR }}.yml ${{ vars.COLLECTOR }}
 
       - name: Directory Contents
@@ -108,20 +108,20 @@ jobs:
       - name: Download k9s CLI Binaries
         run: |
           export REPO="derailed/k9s"
+          export DEST="ISO/binaries"
           echo -e "\nDownloading binaries\n"
-          mkdir -p ISO/binaries
-          cd ISO/binaries
+          mkdir -p $DEST
           echo -e "\nWorking with github repo $REPO"
           echo -e "Listing releases\n"
           gh release list -R $REPO
           echo -e "\nDownloading Latest to $DEST\n"
-          gh release download -p "*" -R $REPO
+          gh release download -p "*" -D $DEST -R $REPO
 
       - name: Copy Markdowns to ISO
         run: cp -v *.md ISO/
 
       - name: Show Artifacts
-        run: ls -Alh ISO/${{ vars.COLLECTOR }}-*.*
+        run: ls -Alh ISO/*
 
       - name: Generate Artifact Hash File
         run: |
